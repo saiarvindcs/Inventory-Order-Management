@@ -1,0 +1,34 @@
+from celery import Celery
+
+from app.core.config import settings
+
+celery_app = Celery(
+    "inventory_order_management",
+    broker=settings.celery_broker_url,
+    backend=settings.celery_result_backend,
+)
+
+celery_app.autodiscover_tasks(
+    ["app.tasks"],
+    force=True,
+)
+
+celery_app.conf.imports = ("app.tasks.example", "app.tasks.maintenance")
+
+celery_app.conf.update(
+    task_serializer="json",
+    result_serializer="json",
+    accept_content=["json"],
+    timezone="UTC",
+    enable_utc=True,
+    task_track_started=True,
+    broker_connection_retry_on_startup=True,
+    task_acks_late=True,
+    worker_prefetch_multiplier=1,
+    beat_schedule={
+        "expire-stock-reservations-every-minute": {
+            "task": "expire_stock_reservations",
+            "schedule": 60.0,
+        }
+    },
+)

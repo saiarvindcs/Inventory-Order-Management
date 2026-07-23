@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Inventory and Order Management operations dashboard">
+  <title>Inventory Operations Dashboard</title>
+  <link rel="stylesheet" href="/static/dashboard/dashboard.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="brand-mark">IO</span><div><strong>InventoryOps</strong><small>Management Console</small></div></div>
+      <nav aria-label="Dashboard sections">
+        <button class="nav-item active" data-view="overview">Overview</button>
+        <button class="nav-item" data-view="orders">Orders</button>
+        <button class="nav-item" data-view="inventory">Inventory</button>
+        <button class="nav-item" data-view="products">Products</button>
+        <button class="nav-item" data-view="shipments">Shipments</button>
+      </nav>
+      <div class="sidebar-footer"><a href="/docs" target="_blank" rel="noreferrer">Swagger API</a><a href="/api/v1/health/live" target="_blank" rel="noreferrer">System Health</a></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div class="title-group"><button id="menu-button" class="icon-button mobile-only" type="button" aria-label="Toggle menu">☰</button><div><p class="eyebrow">OPERATIONS CONTROL</p><h1 id="page-title">Overview</h1></div></div>
+        <div class="top-actions"><span id="health-pill" class="status-pill pending">Checking API…</span><button id="theme-button" class="button ghost" type="button" aria-label="Toggle theme">🌙</button><button id="refresh-button" class="button secondary" type="button">Refresh</button><button id="logout-button" class="button ghost hidden" type="button">Log out</button></div>
+      </header>
+
+      <section id="alert" class="alert hidden" role="alert"></section>
+      <section id="login-panel" class="login-panel"><div class="login-copy"><p class="eyebrow">SECURE ACCESS</p><h2>Sign in to view live operations</h2><p>Use an account created through the API. Your access token stays only in this browser session.</p></div><form id="login-form" class="login-form"><label>Email<input id="email" type="email" autocomplete="username" required placeholder="sai@example.com"></label><label>Password<input id="password" type="password" autocomplete="current-password" required placeholder="••••••••"></label><button class="button primary" type="submit">Sign in</button></form></section>
+
+      <div id="dashboard-content" class="hidden">
+        <div id="loading-state" class="loading-grid hidden" aria-label="Loading dashboard"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton wide"></div></div>
+
+        <section id="overview-view" class="view active-view">
+          <div id="kpi-grid" class="kpi-grid"></div>
+          <div class="chart-grid">
+            <article class="panel"><div class="panel-header"><div><p class="eyebrow">ORDER MIX</p><h2>Orders by status</h2></div></div><div id="order-status-chart" class="bar-chart"></div></article>
+            <article class="panel"><div class="panel-header"><div><p class="eyebrow">STOCK POSITION</p><h2>Inventory utilisation</h2></div></div><div id="inventory-chart" class="donut-wrap"></div></article>
+          </div>
+          <div class="content-grid">
+            <article class="panel span-two"><div class="panel-header"><div><p class="eyebrow">FULFILMENT</p><h2>Recent orders</h2></div><span id="orders-count" class="muted"></span></div><div class="table-wrap"><table><thead><tr><th>Order</th><th>Status</th><th>Payment</th><th>Total</th><th>Created</th></tr></thead><tbody id="recent-orders-body"></tbody></table></div></article>
+            <article class="panel"><div class="panel-header"><div><p class="eyebrow">STOCK RISK</p><h2>Low-stock items</h2></div><span class="badge">≤ 10</span></div><div id="low-stock-list" class="stack-list"></div></article>
+          </div>
+        </section>
+
+        <section id="orders-view" class="view">
+          <article class="panel"><div class="panel-header responsive-header"><div><h2>Orders</h2><p class="muted">Open any order to inspect items, payment and fulfilment.</p></div><div class="toolbar"><input id="orders-search" class="control" placeholder="Search order or customer"><select id="orders-status" class="control"><option value="">All statuses</option><option>draft</option><option>confirmed</option><option>processing</option><option>shipped</option><option>delivered</option><option>cancelled</option></select><select id="orders-sort" class="control"><option value="created_desc">Newest first</option><option value="created_asc">Oldest first</option><option value="total_desc">Highest total</option><option value="total_asc">Lowest total</option></select></div></div><div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Payment</th><th>Items</th><th>Total</th><th>Created</th><th></th></tr></thead><tbody id="orders-body"></tbody></table></div><div id="orders-pagination" class="pagination"></div></article>
+        </section>
+
+        <section id="inventory-view" class="view">
+          <article class="panel"><div class="panel-header responsive-header"><div><h2>Inventory balances</h2><p class="muted">Live availability by warehouse and product variant.</p></div><div class="toolbar"><input id="inventory-search" class="control" placeholder="Search warehouse or variant"><select id="inventory-filter" class="control"><option value="">All stock</option><option value="low">Low stock (≤10)</option><option value="available">Available</option><option value="reserved">Reserved</option></select></div></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Warehouse</th><th>Variant</th><th>On hand</th><th>Reserved</th><th>Available</th></tr></thead><tbody id="inventory-body"></tbody></table></div><div id="inventory-pagination" class="pagination"></div></article>
+        </section>
+
+        <section id="products-view" class="view">
+          <article class="panel"><div class="panel-header responsive-header"><div><h2>Product catalogue</h2><p class="muted">Manage products, pricing, stock and status.</p></div><div class="toolbar"><input id="products-search" class="control" placeholder="Search SKU or product"><select id="products-category" class="control"><option value="">All categories</option></select><select id="products-sort" class="control"><option value="name_asc">Name A–Z</option><option value="name_desc">Name Z–A</option><option value="price_asc">Price low–high</option><option value="price_desc">Price high–low</option></select><button id="add-product-button" class="button primary" type="button">+ Add product</button></div></div><div class="table-wrap"><table><thead><tr><th>Product</th><th>SKU</th><th>Category</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead><tbody id="products-body"></tbody></table></div><div id="products-pagination" class="pagination"></div></article>
+        </section>
+
+        <section id="shipments-view" class="view">
+          <article class="panel"><div class="panel-header responsive-header"><div><h2>Shipments</h2><p class="muted">Track carrier, status and delivery progress.</p></div><div class="toolbar"><input id="shipments-search" class="control" placeholder="Search tracking, carrier or order"><select id="shipments-status" class="control"><option value="">All statuses</option><option>pending</option><option>packed</option><option>shipped</option><option>in_transit</option><option>delivered</option><option>cancelled</option></select></div></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Order</th><th>Status</th><th>Carrier</th><th>Tracking</th><th>Shipped</th><th></th></tr></thead><tbody id="shipments-body"></tbody></table></div><div id="shipments-pagination" class="pagination"></div></article>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="product-dialog" class="modal"><form id="product-form" method="dialog"><div class="modal-header"><div><p class="eyebrow">CATALOGUE</p><h2 id="product-dialog-title">Add product</h2></div><button class="icon-button" type="button" data-close-dialog="product-dialog">×</button></div><input id="product-id" type="hidden"><div class="form-grid"><label>Name<input id="product-name" required minlength="2"></label><label>SKU<input id="product-sku" required minlength="2"></label><label>Price<input id="product-price" type="number" min="0.01" step="0.01" required></label><label>Category<select id="product-category" required></select></label><label class="span-two">Image URL<input id="product-image" type="url" placeholder="https://..."></label><label class="span-two">Description<textarea id="product-description" rows="4"></textarea></label><label class="checkbox"><input id="product-active" type="checkbox" checked> Active</label></div><div class="modal-actions"><button class="button ghost" type="button" data-close-dialog="product-dialog">Cancel</button><button id="product-save" class="button primary" type="submit">Save product</button></div></form></dialog>
+
+  <dialog id="details-dialog" class="modal modal-wide"><div class="modal-header"><div><p class="eyebrow" id="details-eyebrow">DETAILS</p><h2 id="details-title">Details</h2></div><button class="icon-button" type="button" data-close-dialog="details-dialog">×</button></div><div id="details-content"></div></dialog>
+
+  <script src="/static/dashboard/dashboard.js" defer></script>
+</body>
+</html>

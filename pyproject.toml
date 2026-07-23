@@ -1,0 +1,114 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "inventory-order-management"
+version = "1.0.0"
+description = "Advanced inventory and order management platform built with FastAPI."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "sqlalchemy",
+    "alembic",
+    "psycopg[binary]",
+    "pydantic-settings",
+    "email-validator",
+    "python-dotenv",
+    "python-jose[cryptography]",
+    "passlib[bcrypt]",
+    "bcrypt<5",
+    "python-multipart",
+    "redis",
+    "celery",
+    "flower",
+    "httpx",
+    "structlog",
+    "prometheus-client"
+]
+
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "faker",
+    "ruff",
+    "mypy",
+    "black",
+    "pre-commit",
+    "pyyaml"
+]
+
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+addopts = "-ra"
+pythonpath = ["."]
+
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+exclude = [
+    ".venv",
+    "alembic/versions"
+]
+
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "B",
+    "UP"
+]
+
+ignore = [
+    "B008"
+]
+
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+
+[tool.mypy]
+python_version = "3.12"
+check_untyped_defs = true
+disallow_untyped_defs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_return_any = true
+no_implicit_optional = true
+exclude = '(^|[\\/])(\.venv|alembic)([\\/]|$)'
+
+[[tool.mypy.overrides]]
+module = ["celery", "celery.*"]
+ignore_missing_imports = true
+
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+exclude = '''
+/(
+    \.venv
+  | alembic/versions
+)/
+'''

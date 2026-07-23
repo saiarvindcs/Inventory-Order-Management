@@ -1,0 +1,85 @@
+envVarGroups:
+  - name: inventory-shared
+    envVars:
+      - key: APP_NAME
+        value: Inventory Order Management API
+      - key: APP_VERSION
+        value: 1.0.0
+      - key: APP_ENV
+        value: production
+      - key: DEBUG
+        value: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: inventory-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 30
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: inventory-redis
+          property: connectionString
+      - key: CELERY_BROKER_URL
+        fromService:
+          type: redis
+          name: inventory-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: redis
+          name: inventory-redis
+          property: connectionString
+      - key: REDIS_REQUIRED
+        value: true
+      - key: LOG_LEVEL
+        value: INFO
+
+services:
+  - type: web
+    name: inventory-order-api
+    runtime: docker
+    plan: starter
+    dockerCommand: /app/scripts/docker-entrypoint.sh uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips=*
+    healthCheckPath: /api/v1/health/live
+    envVars:
+      - fromGroup: inventory-shared
+      - key: ALLOWED_HOSTS
+        value: inventory-order-api.onrender.com
+      - key: RUN_MIGRATIONS
+        value: true
+
+  - type: worker
+    name: inventory-order-worker
+    runtime: docker
+    plan: starter
+    dockerCommand: /app/scripts/docker-entrypoint.sh celery -A app.core.celery.celery_app worker --loglevel=info --concurrency=2
+    envVars:
+      - fromGroup: inventory-shared
+      - key: RUN_MIGRATIONS
+        value: false
+
+  - type: worker
+    name: inventory-order-beat
+    runtime: docker
+    plan: starter
+    dockerCommand: /app/scripts/docker-entrypoint.sh celery -A app.core.celery.celery_app beat --loglevel=info
+    envVars:
+      - fromGroup: inventory-shared
+      - key: RUN_MIGRATIONS
+        value: false
+
+  - type: redis
+    name: inventory-redis
+    plan: starter
+    ipAllowList: []
+
+databases:
+  - name: inventory-db
+    plan: starter
+    databaseName: inventory_db
+    user: inventory_user
