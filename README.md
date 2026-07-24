@@ -315,17 +315,30 @@ pytest
 
 ## Dashboard
 
-### Dashboard Overview
+### Dashboard Home
 
 ![Dashboard Overview](docs/images/01-Dashboard.png)
 
+### Dashboard Overview
+
 ![Dashboard View 2](docs/images/02-Dashboard.png)
+
+### Dashboard Order Mangement
 
 ![Dashboard View 3](docs/images/03-Dashboard.png)
 
+
+### Dashboard Inventory Mangement
+
 ![Dashboard View 4](docs/images/04-Dashboard.png)
 
+
+### Dashboard Product Mangement
+
 ![Dashboard View 5](docs/images/05-Dashboard.png)
+
+
+### Dashboard Shipment Mangement
 
 ![Dashboard View 6](docs/images/06-Dashboard.png)
 
