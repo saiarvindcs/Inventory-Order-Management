@@ -309,6 +309,110 @@ pytest
 
 ---
 
+---
+
+# 📸 Application Screenshots
+
+## Dashboard
+
+### Dashboard Overview
+
+![Dashboard Overview](docs/images/01-dashboard.png)
+
+---
+
+### Dashboard View 2
+
+![Dashboard View 2](docs/images/02-dashboard.png)
+
+---
+
+### Dashboard View 3
+
+![Dashboard View 3](docs/images/03-dashboard.png)
+
+---
+
+### Dashboard View 4
+
+![Dashboard View 4](docs/images/04-dashboard.png)
+
+---
+
+### Dashboard View 5
+
+![Dashboard View 5](docs/images/05-dashboard.png)
+
+---
+
+### Dashboard View 6
+
+![Dashboard View 6](docs/images/06-dashboard.png)
+
+---
+
+# 📖 Swagger API Documentation
+
+### Swagger Documentation (Part 1)
+
+![Swagger 1](docs/images/01-swagger.png)
+
+---
+
+### Swagger Documentation (Part 2)
+
+![Swagger 2](docs/images/02-swagger.png)
+
+---
+
+### Swagger Documentation (Part 3)
+
+![Swagger 3](docs/images/03-swagger.png)
+
+---
+
+### Swagger Documentation (Part 4)
+
+![Swagger 4](docs/images/04-swagger.png)
+
+---
+
+### Swagger Documentation (Part 5)
+
+![Swagger 5](docs/images/05-swagger.png)
+
+---
+
+### Swagger Documentation (Part 6)
+
+![Swagger 6](docs/images/06-swagger.png)
+
+---
+
+### Swagger Documentation (Part 7)
+
+![Swagger 7](docs/images/07-swagger.png)
+
+---
+
+### Swagger Documentation (Part 8)
+
+![Swagger 8](docs/images/08-swagger.png)
+
+---
+
+### Swagger Documentation (Part 9)
+
+![Swagger 9](docs/images/09-swagger.png)
+
+---
+
+### Swagger Documentation (Part 10)
+
+![Swagger 10](docs/images/10-swagger.png)
+
+
+
 # 👨‍💻 Author
 
 **Sai Aravind**
