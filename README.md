@@ -1,14 +1,28 @@
 # 📦 Inventory & Order Management Platform
 
-A production-ready backend Inventory & Order Management Platform built using **FastAPI**, **PostgreSQL**, **SQLAlchemy**, **Alembic**, **JWT Authentication**, **Redis**, **Celery**, and **Docker**.
+<p align="center">
 
-The project provides a scalable REST API for managing products, warehouses, inventory, suppliers, purchase orders, stock transfers, customer orders, authentication, reporting, and audit logging.
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-ORM-red)
+![Alembic](https://img.shields.io/badge/Alembic-Migrations-orange)
+![Redis](https://img.shields.io/badge/Redis-Cache-red?logo=redis)
+![Celery](https://img.shields.io/badge/Celery-Background%20Tasks-green?logo=celery)
+![Docker](https://img.shields.io/badge/Docker-Container-blue?logo=docker)
+![JWT](https://img.shields.io/badge/JWT-Authentication-black)
+
+</p>
+
+A production-ready backend Inventory & Order Management Platform built with **FastAPI**, **PostgreSQL**, **SQLAlchemy**, **Alembic**, **Redis**, **Celery**, **JWT Authentication**, and **Docker**.
+
+The platform provides secure REST APIs for inventory operations, warehouse management, supplier management, purchase orders, stock transfers, customer orders, authentication, reporting, and audit logging.
 
 ---
 
 # 🚀 Features
 
-## Authentication & Authorization
+## 🔐 Authentication & Authorization
 
 - JWT Authentication
 - Refresh Tokens
@@ -19,17 +33,17 @@ The project provides a scalable REST API for managing products, warehouses, inve
 
 ---
 
-## Product Management
+## 📦 Product Management
 
 - Product CRUD
-- Category Management
-- SKU Support
+- Category CRUD
+- SKU Management
 - Product Status
 - Search & Filtering
 
 ---
 
-## Warehouse Management
+## 🏬 Warehouse Management
 
 - Warehouse CRUD
 - Multi-Warehouse Support
@@ -37,183 +51,211 @@ The project provides a scalable REST API for managing products, warehouses, inve
 
 ---
 
-## Inventory Management
+## 📊 Inventory Management
 
 - Inventory Tracking
 - Inventory Ledger
 - Stock In
 - Stock Out
-- Inventory Adjustments
+- Stock Adjustments
+- Available Quantity Calculation
 - Inventory Reports
-- Available Stock Calculation
 
 ---
 
-## Suppliers
+## 🚚 Supplier Management
 
 - Supplier CRUD
-- Supplier Status
 - Contact Information
+- Supplier Status
 
 ---
 
-## Purchase Orders
+## 📝 Purchase Orders
 
 - Purchase Order Creation
-- Purchase Status Tracking
-- Receiving Inventory
+- Purchase Order Status
+- Inventory Receiving
 - Supplier Integration
 
 ---
 
-## Stock Transfers
+## 🔄 Stock Transfers
 
 - Warehouse-to-Warehouse Transfers
-- Transfer Status
+- Transfer Approval
 - Inventory Synchronization
 
 ---
 
-## Customer Orders
+## 🛒 Customer Orders
 
-- Customer Management
+- Customer CRUD
 - Order Creation
 - Order Status Workflow
 - Order Validation
 
 ---
 
-## Reports
+## 📈 Reports
 
 - Inventory Reports
 - Warehouse Reports
 - Product Reports
+- Order Reports
 
 ---
 
-## Developer Features
+## ⚙️ Developer Features
 
-- OpenAPI / Swagger Documentation
-- Alembic Database Migrations
+- OpenAPI Documentation
+- Swagger UI
+- ReDoc
 - Docker Support
-- Redis Integration
-- Celery Background Tasks
+- Alembic Migrations
 - GitHub Actions CI
 - Environment-based Configuration
+- Structured Logging
 
 ---
 
-# 🛠 Tech Stack
+# 🏗 System Architecture
 
-### Backend
+```
+                Client / Frontend
+                        │
+                        ▼
+                 FastAPI REST API
+                        │
+      ┌─────────────────┼─────────────────┐
+      ▼                 ▼                 ▼
+ Authentication     Business Logic    Background Jobs
+                        │                 Celery
+                        ▼
+                  Repository Layer
+                        │
+                  SQLAlchemy ORM
+                        │
+                 PostgreSQL Database
+```
 
-- Python
-- FastAPI
-- SQLAlchemy
-- Alembic
+---
 
-### Database
+# 🛠 Technology Stack
 
-- PostgreSQL
-
-### Authentication
-
-- JWT
-- Passlib
-
-### Caching
-
-- Redis
-
-### Background Processing
-
-- Celery
-
-### DevOps
-
-- Docker
-- GitHub Actions
-
-### Testing
-
-- Pytest
+| Category | Technologies |
+|----------|--------------|
+| Language | Python |
+| Framework | FastAPI |
+| ORM | SQLAlchemy |
+| Database | PostgreSQL |
+| Authentication | JWT |
+| Password Hashing | Passlib |
+| Cache | Redis |
+| Background Jobs | Celery |
+| Database Migration | Alembic |
+| Containerization | Docker |
+| Testing | Pytest |
+| CI/CD | GitHub Actions |
 
 ---
 
 # 📂 Project Structure
 
 ```
-app/
+Inventory-Order-Management
 │
-├── api/
-├── core/
-├── db/
-├── models/
-├── repositories/
-├── schemas/
-├── services/
-├── utils/
-└── main.py
-
-alembic/
-docs/
-tests/
-scripts/
+├── app
+│   ├── api
+│   ├── core
+│   ├── db
+│   ├── middleware
+│   ├── models
+│   ├── repositories
+│   ├── schemas
+│   ├── services
+│   ├── utils
+│   └── main.py
+│
+├── alembic
+├── docs
+├── scripts
+├── tests
+│
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+├── alembic.ini
+└── README.md
 ```
 
 ---
 
-# 🔐 Security
+# 📚 API Documentation
 
-- JWT Authentication
-- Password Hashing
-- Role-Based Authorization
-- Request Validation
-- Environment Variables
-
----
-
-# 📖 API Documentation
+After running the application:
 
 Swagger UI
 
 ```
-/docs
+http://localhost:8000/docs
 ```
 
 ReDoc
 
 ```
-/redoc
+http://localhost:8000/redoc
 ```
 
 ---
 
-# ⚙ Installation
+# ⚙️ Local Setup
+
+Clone repository
 
 ```bash
 git clone https://github.com/saiarvindcs/Inventory-Order-Management.git
+```
 
+Go into project
+
+```bash
 cd Inventory-Order-Management
+```
 
+Create virtual environment
+
+```bash
 python -m venv .venv
+```
 
+Activate
+
+### Windows
+
+```powershell
+.venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
 source .venv/bin/activate
 ```
 
-Install dependencies
+Install packages
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Create environment variables
+Create environment file
 
 ```bash
 cp .env.example .env
 ```
 
-Run migrations
+Run database migrations
 
 ```bash
 alembic upgrade head
@@ -227,14 +269,6 @@ uvicorn app.main:app --reload
 
 ---
 
-# 🧪 Testing
-
-```bash
-pytest
-```
-
----
-
 # 🐳 Docker
 
 ```bash
@@ -243,22 +277,35 @@ docker compose up --build
 
 ---
 
-# 📈 Roadmap
+# 🧪 Running Tests
 
-- Authentication
-- RBAC
-- Product Catalogue
-- Inventory Ledger
-- Warehouses
-- Suppliers
-- Purchase Orders
-- Stock Transfers
-- Customer Orders
-- Payments
-- Reporting
-- Audit Logs
-- Docker
-- CI/CD
+```bash
+pytest
+```
+
+---
+
+# 🔐 Security
+
+- JWT Authentication
+- Password Hashing
+- Role-Based Access Control
+- Request Validation
+- Environment Variables
+- Protected Endpoints
+
+---
+
+# 🚀 Future Enhancements
+
+- Payment Gateway Integration
+- Advanced Inventory Forecasting
+- Event-Driven Architecture
+- Kubernetes Deployment
+- Distributed Caching
+- Notification Service
+- Real-time Inventory Updates
+- Analytics Dashboard
 
 ---
 
@@ -270,3 +317,7 @@ Backend Developer
 
 GitHub:
 https://github.com/saiarvindcs
+
+---
+
+## ⭐ If you found this project useful, consider giving it a Star!
