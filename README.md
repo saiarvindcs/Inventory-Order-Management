@@ -317,37 +317,17 @@ pytest
 
 ### Dashboard Overview
 
-![Dashboard Overview](docs/images/01-dashboard.png)
+![Dashboard Overview](docs/images/01-Dashboard.png)
 
----
+![Dashboard View 2](docs/images/02-Dashboard.png)
 
-### Dashboard View 2
+![Dashboard View 3](docs/images/03-Dashboard.png)
 
-![Dashboard View 2](docs/images/02-dashboard.png)
+![Dashboard View 4](docs/images/04-Dashboard.png)
 
----
+![Dashboard View 5](docs/images/05-Dashboard.png)
 
-### Dashboard View 3
-
-![Dashboard View 3](docs/images/03-dashboard.png)
-
----
-
-### Dashboard View 4
-
-![Dashboard View 4](docs/images/04-dashboard.png)
-
----
-
-### Dashboard View 5
-
-![Dashboard View 5](docs/images/05-dashboard.png)
-
----
-
-### Dashboard View 6
-
-![Dashboard View 6](docs/images/06-dashboard.png)
+![Dashboard View 6](docs/images/06-Dashboard.png)
 
 ---
 
