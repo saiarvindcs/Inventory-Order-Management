@@ -1,157 +1,272 @@
-# Inventory & Order Management Platform
+# 📦 Inventory & Order Management Platform
 
-A production-oriented backend platform for catalogue management, multi-warehouse inventory accounting, purchasing, stock transfers, customer orders, reservations, payments, fulfilment, returns, reporting, background processing, observability, and deployment.
+A production-ready backend Inventory & Order Management Platform built using **FastAPI**, **PostgreSQL**, **SQLAlchemy**, **Alembic**, **JWT Authentication**, **Redis**, **Celery**, and **Docker**.
 
-## Live surfaces
+The project provides a scalable REST API for managing products, warehouses, inventory, suppliers, purchase orders, stock transfers, customer orders, authentication, reporting, and audit logging.
 
-After startup:
+---
 
-- API documentation: `http://localhost:8000/docs`
-- Operations dashboard: `http://localhost:8000/dashboard`
-- Liveness: `http://localhost:8000/api/v1/health/live`
-- Readiness: `http://localhost:8000/api/v1/health/ready`
-- Prometheus metrics: `http://localhost:8000/metrics`
+# 🚀 Features
 
-## Technology stack
+## Authentication & Authorization
 
-Python 3.12, FastAPI, SQLAlchemy 2, Alembic, PostgreSQL, Redis, Celery, JWT/OAuth2, Pytest, Prometheus, Docker, Docker Compose, GitHub Actions, and Render.
+- JWT Authentication
+- Refresh Tokens
+- Role-Based Access Control (RBAC)
+- Password Hashing
+- Protected APIs
+- User Management
 
-## Main capabilities
+---
 
-- JWT authentication, role-based access control, and permission checks
-- Categories, products, variants, pricing history, warehouses, and suppliers
-- Multi-warehouse balances with reserved, available, damaged, and total quantities
-- Immutable stock-movement ledger and negative-stock protection
-- Purchase orders, goods receipt, and supplier workflows
-- Stock-transfer lifecycle with transfer-in and transfer-out movements
-- Customer-order state machine and status history
-- Transactional stock reservations with expiry and consumption
-- Idempotent payments and duplicate-safe webhook processing
-- Shipments, returns, return items, and cumulative refund protection
-- Redis-backed processing and Celery maintenance tasks
-- Reports, audit logs, notifications, structured logs, health checks, and metrics
-- Browser dashboard served by FastAPI without a separate Node deployment
+## Product Management
 
-## Fastest setup: Docker Compose
+- Product CRUD
+- Category Management
+- SKU Support
+- Product Status
+- Search & Filtering
 
-Requirements: Docker Desktop and Docker Compose.
+---
 
-```powershell
-Copy-Item .env.example .env
+## Warehouse Management
+
+- Warehouse CRUD
+- Multi-Warehouse Support
+- Warehouse Status
+
+---
+
+## Inventory Management
+
+- Inventory Tracking
+- Inventory Ledger
+- Stock In
+- Stock Out
+- Inventory Adjustments
+- Inventory Reports
+- Available Stock Calculation
+
+---
+
+## Suppliers
+
+- Supplier CRUD
+- Supplier Status
+- Contact Information
+
+---
+
+## Purchase Orders
+
+- Purchase Order Creation
+- Purchase Status Tracking
+- Receiving Inventory
+- Supplier Integration
+
+---
+
+## Stock Transfers
+
+- Warehouse-to-Warehouse Transfers
+- Transfer Status
+- Inventory Synchronization
+
+---
+
+## Customer Orders
+
+- Customer Management
+- Order Creation
+- Order Status Workflow
+- Order Validation
+
+---
+
+## Reports
+
+- Inventory Reports
+- Warehouse Reports
+- Product Reports
+
+---
+
+## Developer Features
+
+- OpenAPI / Swagger Documentation
+- Alembic Database Migrations
+- Docker Support
+- Redis Integration
+- Celery Background Tasks
+- GitHub Actions CI
+- Environment-based Configuration
+
+---
+
+# 🛠 Tech Stack
+
+### Backend
+
+- Python
+- FastAPI
+- SQLAlchemy
+- Alembic
+
+### Database
+
+- PostgreSQL
+
+### Authentication
+
+- JWT
+- Passlib
+
+### Caching
+
+- Redis
+
+### Background Processing
+
+- Celery
+
+### DevOps
+
+- Docker
+- GitHub Actions
+
+### Testing
+
+- Pytest
+
+---
+
+# 📂 Project Structure
+
+```
+app/
+│
+├── api/
+├── core/
+├── db/
+├── models/
+├── repositories/
+├── schemas/
+├── services/
+├── utils/
+└── main.py
+
+alembic/
+docs/
+tests/
+scripts/
 ```
 
-Edit `.env` and set at minimum:
+---
 
-```env
-APP_ENV=production
-DEBUG=false
-POSTGRES_PASSWORD=choose-a-strong-password
-SECRET_KEY=replace-with-a-random-secret-at-least-32-characters
-ALLOWED_HOSTS=localhost,127.0.0.1
+# 🔐 Security
+
+- JWT Authentication
+- Password Hashing
+- Role-Based Authorization
+- Request Validation
+- Environment Variables
+
+---
+
+# 📖 API Documentation
+
+Swagger UI
+
+```
+/docs
 ```
 
-Start the complete stack:
+ReDoc
 
-```powershell
-docker compose up --build
+```
+/redoc
 ```
 
-The API container waits for PostgreSQL and Redis, runs Alembic migrations, and then starts Uvicorn. Celery worker and Celery Beat start only after the API is healthy.
+---
 
-Stop services:
+# ⚙ Installation
 
-```powershell
-docker compose down
+```bash
+git clone https://github.com/saiarvindcs/Inventory-Order-Management.git
+
+cd Inventory-Order-Management
+
+python -m venv .venv
+
+source .venv/bin/activate
 ```
 
-Remove local database and Redis volumes only when a full reset is intended:
+Install dependencies
 
-```powershell
-docker compose down -v
+```bash
+pip install -r requirements.txt
 ```
 
-## Local development without Docker
+Create environment variables
 
-Start PostgreSQL and Redis first, then:
+```bash
+cp .env.example .env
+```
 
-```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -e ".[dev]"
-Copy-Item .env.example .env
+Run migrations
+
+```bash
 alembic upgrade head
+```
+
+Start server
+
+```bash
 uvicorn app.main:app --reload
 ```
 
-Run Celery in separate terminals:
+---
 
-```powershell
-celery -A app.core.celery.celery_app worker --loglevel=info --pool=solo
-celery -A app.core.celery.celery_app beat --loglevel=info
+# 🧪 Testing
+
+```bash
+pytest
 ```
 
-`--pool=solo` is recommended for local Celery workers on Windows.
+---
 
-## Tests and quality checks
+# 🐳 Docker
 
-```powershell
-pytest -q
-ruff check app tests
-mypy app
-alembic heads
+```bash
+docker compose up --build
 ```
 
-The GitHub Actions workflow additionally starts PostgreSQL and Redis, applies migrations, runs dependency auditing, executes tests, and builds the Docker image.
+---
 
-## Initial administrator
+# 📈 Roadmap
 
-Registration does not silently grant administrative access. To assign the seeded admin role during startup, register a user first and set:
+- Authentication
+- RBAC
+- Product Catalogue
+- Inventory Ledger
+- Warehouses
+- Suppliers
+- Purchase Orders
+- Stock Transfers
+- Customer Orders
+- Payments
+- Reporting
+- Audit Logs
+- Docker
+- CI/CD
 
-```env
-INITIAL_ADMIN_EMAIL=your-email@example.com
-```
+---
 
-Restart the API once. Leave this variable blank when automatic assignment is not needed.
+# 👨‍💻 Author
 
-## Project structure
+**Sai Aravind**
 
-```text
-app/
-  api/v1/          HTTP endpoints
-  core/            configuration, JWT, Redis, Celery, logging, metrics
-  db/              engine and session management
-  middleware/      request context and performance instrumentation
-  models/          SQLAlchemy entities
-  repositories/    persistence operations
-  schemas/         Pydantic request/response contracts
-  services/        business rules and transactions
-  static/dashboard browser operations dashboard
-  tasks/            Celery jobs
-alembic/            database migrations
-docs/               architecture, deployment, workflows, interview material
-tests/              workflow, security, observability, and deployment tests
-```
+Backend Developer
 
-## Deployment
-
-The repository includes `render.yaml` for a Render Blueprint containing the web API, Celery worker, Celery Beat, PostgreSQL, and Redis. See [`docs/deployment.md`](docs/deployment.md) for the exact deployment and verification sequence.
-
-## Documentation
-
-- [`docs/architecture.md`](docs/architecture.md)
-- [`docs/database-design.md`](docs/database-design.md)
-- [`docs/workflows.md`](docs/workflows.md)
-- [`docs/deployment.md`](docs/deployment.md)
-- [`docs/api-guide.md`](docs/api-guide.md)
-- [`docs/demo-guide.md`](docs/demo-guide.md)
-- [`docs/interview-guide.md`](docs/interview-guide.md)
-- [`docs/troubleshooting.md`](docs/troubleshooting.md)
-
-## Roadmap status
-
-All 20 planned phases are implemented in this source package. Runtime acceptance on a target machine still requires a clean dependency installation, PostgreSQL/Redis startup, migrations, complete tests, Docker startup, Swagger workflow checks, and public deployment verification.
-
-## License
-
-This project is intended for portfolio, learning, and interview demonstration use.
+GitHub:
+https://github.com/saiarvindcs
