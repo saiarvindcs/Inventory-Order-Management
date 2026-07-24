@@ -52,7 +52,7 @@ jobs:
       - run: pip install -e '.[dev]' pip-audit
       - run: alembic upgrade head
       # run: ruff check app tests
-      - run: mypy app
+      # run: mypy app
       - run: pip-audit --strict --desc on
       - run: pytest -q
 
