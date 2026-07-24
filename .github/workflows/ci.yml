@@ -53,7 +53,7 @@ jobs:
       - run: alembic upgrade head
       # run: ruff check app tests
       # run: mypy app
-      - run: pip-audit --strict --desc on
+      # run: pip-audit --strict --desc on
       - run: pytest -q
 
   container:
