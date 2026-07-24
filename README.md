@@ -404,6 +404,53 @@ pytest
 
 ![Swagger 10](docs/images/10-swagger.png)
 
+# 🏗️ System Architecture
+
+The Inventory & Order Management Platform follows a modern, scalable, and modular architecture. The frontend communicates with the FastAPI backend through secure REST APIs. The backend uses PostgreSQL for persistent storage, Redis for caching and message brokering, and Celery for asynchronous background task processing.
+
+![System Architecture](docs/diagrams/architecture.png)
+
+---
+
+# 🗄️ Database ER Diagram
+
+The database is designed using a normalized relational model to support authentication, inventory management, purchasing, order processing, payments, shipments, returns, and auditing while maintaining referential integrity and scalability.
+
+![Database ER Diagram](docs/diagrams/er-diagram.png)
+
+---
+
+# 🚀 Deployment
+
+The project is designed to support cloud deployment with separate frontend and backend services.
+
+| Component | Status | URL |
+|-----------|--------|-----|
+| Frontend | 🚧 Coming Soon | To be deployed |
+| Backend API | 🚧 Coming Soon | To be deployed |
+| Swagger API Docs | 🚧 Coming Soon | To be deployed |
+
+> Once deployed, the live URLs will be updated here.
+
+
+---
+
+# 🔮 Future Enhancements
+
+The following features are planned for future releases:
+
+- Multi-tenant architecture
+- Barcode & QR code support
+- Email & SMS notifications
+- Advanced analytics dashboard
+- AI-powered demand forecasting
+- Kubernetes deployment
+- Prometheus & Grafana monitoring
+- Elasticsearch-powered product search
+- WebSocket real-time inventory updates
+- Mobile application support
+- Multi-language support
+- Multi-currency support
 
 
 # 👨‍💻 Author
